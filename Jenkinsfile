@@ -15,14 +15,19 @@ pipeline {
     }
     stage('Start container') {
       steps {
-	sh 'echo "#bin/bash \n export job_name=$JOB_NAME" > /tmp/properties.sh'
-	sh 'scp /tmp/properties.sh naveenn@192.168.1.114:/tmp/.'
-        sh 'ssh naveenn@192.168.1.114 chmod 755 /tmp/properties.sh'
-        sh 'ssh naveenn@192.168.1.114 source /tmp/properties.sh'
-	sh 'ssh naveenn@192.168.1.114 echo $job_name'
-	sh 'ssh naveenn@192.168.1.114 cd /home/naveenn/jenkins_home/workspace/$job_name/'
-	sh 'ssh naveenn@192.168.1.114 docker-compose up --force-recreate -d --no-color'
-        sh 'ssh naveenn@192.168.1.114 docker ps'
+	sh ...
+	echo "#bin/bash \n export job_name=$JOB_NAME" > /tmp/properties.sh
+	scp /tmp/properties.sh naveenn@192.168.1.114:/tmp/.
+	ssh naveenn@192.168.1.114 <<'ENDSSH'
+	chmod 755 /tmp/properties.sh
+	source /tmp/properties.sh
+	echo $job_name
+	cd /home/naveenn/jenkins_home/workspace/$job_name/
+	pwd
+	docker-compose up --force-recreate -d --no-color	
+	docker ps	
+	ENDSSH	
+	... 
       }
     }
     stage('Run tests against the container') {
