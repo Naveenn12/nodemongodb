@@ -26,7 +26,7 @@ pipeline {
 	pwd
 	docker-compose up --force-recreate -d --no-color	
 	docker ps	
-	ENDSSH	
+	ENDSSH'	
 	''' 
       }
     }
