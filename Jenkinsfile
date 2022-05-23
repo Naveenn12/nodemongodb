@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage("verify tooling") {
       steps {
-        sh 'ssh naveenn@192.168.1.114 docker version; sleep 5 ; docker-compose version ; sleep 5 ; curl --version' 
+        sh 'ssh naveenn@192.168.1.114 docker version'
+	sh 'ssh naveenn@192.168.1.114 docker-compose version'
+	sh 'ssh naveenn@192.168.1.114 curl --version' 
       }
     }
     stage('Prune Docker data') {
@@ -15,7 +17,11 @@ pipeline {
       steps {
 	sh 'echo "#bin/bash \n export job_name=$JOB_NAME" > /tmp/properties.sh'
 	sh 'scp /tmp/properties.sh naveenn@192.168.1.114:/tmp/.'
-        sh 'ssh naveenn@192.168.1.114 chmod 755 /tmp/properties.sh;source /tmp/properties.sh;echo $job_name;cd /home/naveenn/jenkins_home/workspace/$job_name/;docker-compose up -d --no-color --wait'
+        sh 'ssh naveenn@192.168.1.114 chmod 755 /tmp/properties.sh'
+        sh 'ssh naveenn@192.168.1.114 source /tmp/properties.sh'
+	sh 'ssh naveenn@192.168.1.114 echo $job_name'
+	sh 'ssh naveenn@192.168.1.114 cd /home/naveenn/jenkins_home/workspace/$job_name/'
+	sh 'ssh naveenn@192.168.1.114 docker-compose up -d --no-color --wait'
         sh 'ssh naveenn@192.168.1.114 docker-compose ps'
       }
     }
