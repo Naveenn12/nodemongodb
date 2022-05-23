@@ -23,11 +23,12 @@ sh '''
 	source /tmp/properties.sh
 	echo $job_name
 	cd /home/naveenn/jenkins_home/workspace/$job_name/
+	docker network create example-net
 	pwd
-	docker-compose up --force-recreate -d --no-color	
-	docker ps	
-	ENDSSH'	
-''' 
+	docker-compose up --force-recreate -d --no-color
+	docker ps
+	ENDSSH
+'''
       }
     }
     stage('Run tests against the container') {
