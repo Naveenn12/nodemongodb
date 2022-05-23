@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage("verify tooling") {
       steps {
-        sh 'ssh naveenn@192.168.1.114 docker version;docker info;docker-compose version;curl --version;jq --version' 
+        sh 'ssh naveenn@192.168.1.114 docker version; sleep 5 ; docker-compose version ; sleep 5 ; curl --version' 
       }
     }
     stage('Prune Docker data') {
