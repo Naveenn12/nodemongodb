@@ -23,6 +23,7 @@ source /tmp/properties.sh
 echo $job_name
 cd /home/naveenn/jenkins_home/workspace/$job_name/
 pwd
+docker network create example-net
 docker-compose up -d
 ENDSSH'''
       }
