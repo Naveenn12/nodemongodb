@@ -15,7 +15,7 @@ pipeline {
     }
     stage('Start container') {
       steps {
-	sh ...
+	sh '''
 	echo "#bin/bash \n export job_name=$JOB_NAME" > /tmp/properties.sh
 	scp /tmp/properties.sh naveenn@192.168.1.114:/tmp/.
 	ssh naveenn@192.168.1.114 <<'ENDSSH'
@@ -27,7 +27,7 @@ pipeline {
 	docker-compose up --force-recreate -d --no-color	
 	docker ps	
 	ENDSSH	
-	... 
+	''' 
       }
     }
     stage('Run tests against the container') {
