@@ -15,10 +15,10 @@ pipeline {
     }
     stage('Start container') {
       steps {
-sh '''
+sh '''#!/bin/bash
 	echo "#bin/bash \n export job_name=$JOB_NAME" > /tmp/properties.sh
 	scp /tmp/properties.sh naveenn@192.168.1.114:/tmp/.
-	ssh naveenn@192.168.1.114 <<'ENDSSH'
+	ssh naveenn@192.168.1.114
 	chmod 755 /tmp/properties.sh
 	source /tmp/properties.sh
 	echo $job_name
@@ -27,8 +27,7 @@ sh '''
 	pwd
 	docker-compose up --force-recreate -d --no-color
 	docker ps
-	ENDSSH
-'''
+_EOF_'''
       }
     }
     stage('Run tests against the container') {
