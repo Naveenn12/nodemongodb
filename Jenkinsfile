@@ -21,8 +21,8 @@ pipeline {
         sh 'ssh naveenn@192.168.1.114 source /tmp/properties.sh'
 	sh 'ssh naveenn@192.168.1.114 echo $job_name'
 	sh 'ssh naveenn@192.168.1.114 cd /home/naveenn/jenkins_home/workspace/$job_name/'
-	sh 'ssh naveenn@192.168.1.114 docker-compose up -d --no-color --wait'
-        sh 'ssh naveenn@192.168.1.114 docker-compose ps'
+	sh 'ssh naveenn@192.168.1.114 docker-compose up --force-recreate -d --no-color'
+        sh 'ssh naveenn@192.168.1.114 docker ps'
       }
     }
     stage('Run tests against the container') {
