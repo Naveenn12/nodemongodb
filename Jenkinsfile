@@ -14,7 +14,7 @@ pipeline {
     stage('Start container') {
       steps {
 	sh 'echo "#bin/bash \n export job_name=$JOB_NAME" > /tmp/properties.sh'
-	scp /tmp/properties.sh naveenn@192.168.1.114:/tmp/.
+	sh 'scp /tmp/properties.sh naveenn@192.168.1.114:/tmp/.'
         sh 'ssh naveenn@192.168.1.114 chmod 755 /tmp/properties.sh;source /tmp/properties.sh;echo $job_name;cd /home/naveenn/jenkins_home/workspace/$job_name/;docker-compose up -d --no-color --wait'
         sh 'ssh naveenn@192.168.1.114 docker-compose ps'
       }
