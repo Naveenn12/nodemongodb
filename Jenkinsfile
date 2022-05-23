@@ -15,8 +15,7 @@ pipeline {
     }
     stage('Start container') {
       steps {
-sh '''#!/bin/bash
-	echo "#bin/bash \n export job_name=$JOB_NAME" > /tmp/properties.sh
+sh '''echo "#bin/bash \\n export job_name=$JOB_NAME" > /tmp/properties.sh
 	scp /tmp/properties.sh naveenn@192.168.1.114:/tmp/.
 	ssh naveenn@192.168.1.114
 	chmod 755 /tmp/properties.sh
@@ -26,8 +25,7 @@ sh '''#!/bin/bash
 	docker network create example-net
 	pwd
 	docker-compose up --force-recreate -d --no-color
-	docker ps
-_EOF_'''
+	docker ps'''
       }
     }
     stage('Run tests against the container') {
